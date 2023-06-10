@@ -44,6 +44,11 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeFavorite(WordPair pair) {
+    favorites.remove(pair);
+    notifyListeners();
+  }
+
   bool isFavorite(WordPair pair) {
     if (favorites.contains(pair)) {
       return true;
@@ -75,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const GeneratorPage();
         break;
       case 1:
-        page = const Placeholder();
+        page = const FavoritesPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -138,9 +143,7 @@ class GeneratorPage extends StatelessWidget {
             children: [
               ElevatedButton.icon(
                 onPressed: appState.toggleFavorite,
-                label: isCurrentFavorite
-                    ? const Text('Liked')
-                    : const Text('Unliked'),
+                label: const Text('Like'),
                 icon: isCurrentFavorite
                     ? const Icon(Icons.favorite)
                     : const Icon(Icons.favorite_outline),
@@ -154,6 +157,56 @@ class GeneratorPage extends StatelessWidget {
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class FavoritesPage extends StatelessWidget {
+  const FavoritesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    if (appState.favorites.isEmpty) {
+      final theme = Theme.of(context);
+      final noDataStyle =
+          theme.textTheme.bodySmall!.copyWith(fontStyle: FontStyle.italic);
+
+      return Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("No favorites yet.", style: noDataStyle),
+          const SizedBox(width: 5),
+          const Icon(Icons.mood_bad)
+        ],
+      ));
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+          title: const Text('Favorites'), backgroundColor: Colors.transparent),
+      backgroundColor: Colors.transparent,
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text('You have '
+                '${appState.favorites.length} favorites:'),
+          ),
+          for (var pair in appState.favorites) ...{
+            ListTile(
+                title: Text(pair.asLowerCase),
+                leading: IconButton(
+                  onPressed: () => {appState.removeFavorite(pair)},
+                  icon: const Icon(Icons.favorite),
+                  tooltip: "Dislike",
+                )),
+            const Divider(height: 0)
+          }
         ],
       ),
     );
