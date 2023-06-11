@@ -11,19 +11,21 @@ class StopwatchApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Stopwatch App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+      themeMode: ThemeMode.system,
+      darkTheme: ThemeData.dark(
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Stopwatch App'),
+      theme: ThemeData.light(
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
