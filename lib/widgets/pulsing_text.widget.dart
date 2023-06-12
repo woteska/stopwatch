@@ -5,10 +5,12 @@ class PulsingTextWidget extends StatefulWidget {
     super.key,
     required this.text,
     required this.isPulsing,
+    this.pulseMilliseconds = 1000,
   });
 
   final String text;
   final bool isPulsing;
+  final int pulseMilliseconds;
 
   @override
   State<PulsingTextWidget> createState() => _PulsingTextWidgetState();
@@ -25,7 +27,7 @@ class _PulsingTextWidgetState extends State<PulsingTextWidget>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: widget.pulseMilliseconds),
     );
 
     _animation =
