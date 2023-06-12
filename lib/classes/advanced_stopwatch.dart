@@ -18,7 +18,11 @@ class AdvancedStopwatch extends Stopwatch with StopwatchTimeFormatMixin {
     laps.clear();
   }
 
-  void addLap() {
+  void lap() {
+    if (!isRunning) {
+      return;
+    }
+
     final currentElapsedMicroseconds = elapsed;
     var previousLapDifferenceMicroseconds = const Duration();
 

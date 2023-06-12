@@ -61,7 +61,7 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
   }
 
   void lap() {
-    _stopwatch.addLap();
+    _stopwatch.lap();
   }
 
   @override
