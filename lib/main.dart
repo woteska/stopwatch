@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stopwatch/widgets/stopwatch.widget.dart';
 
 void main() {
   runApp(const StopwatchApp());
@@ -36,15 +37,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return const Scaffold(
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SafeArea(
-              child: Placeholder(),
-            )
-          ],
-        ),
-      );
+          body: SafeArea(
+        child: StopwatchWidget(),
+      ));
     });
   }
 }
