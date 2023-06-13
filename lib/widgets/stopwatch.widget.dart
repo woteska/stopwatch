@@ -15,9 +15,10 @@ class StopwatchWidget extends StatefulWidget {
 class _StopwatchWidgetState extends State<StopwatchWidget>
     with TickerProviderStateMixin, StopwatchTimeFormatMixin {
   final AdvancedStopwatch _stopwatch = AdvancedStopwatch();
+  late Ticker _ticker;
+
   static const actionButtonOpacityDurationMilliseconds = 250;
   static const actionButtonSizedBoxSize = 30.0;
-  late Ticker _ticker;
 
   @override
   void initState() {
@@ -50,6 +51,7 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
 
   void resetStopwatch() {
     setState(() {
+      stopStopwatch();
       _stopwatch.reset();
     });
   }
