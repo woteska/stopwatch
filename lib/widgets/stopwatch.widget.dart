@@ -16,9 +16,8 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
     with TickerProviderStateMixin, StopwatchTimeFormatMixin {
   final AdvancedStopwatch _stopwatch = AdvancedStopwatch();
   late Ticker _ticker;
-
-  static const actionButtonOpacityDurationMilliseconds = 250;
-  static const actionButtonSizedBoxSize = 30.0;
+  static const startStopActionButtonIconSize = 40.0;
+  static const actionButtonIconSize = 30.0;
 
   @override
   void initState() {
@@ -68,94 +67,79 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
 
   @override
   Widget build(BuildContext context) {
-    var isResetButtonVisible =
-        _stopwatch.laps.isNotEmpty || !_stopwatch.isZero();
-    var isRemoveAllLapsButtonVisible =
-        !_stopwatch.isRunning && _stopwatch.laps.isNotEmpty;
-
     return Scaffold(
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      PulsingTextWidget(
-          text: _stopwatch.formatElapsed(),
-          isPulsing: !_stopwatch.isRunning && !_stopwatch.isZero()),
-      const SizedBox(height: actionButtonSizedBoxSize),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Visibility(
-              visible: isResetButtonVisible,
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              child: AnimatedOpacity(
-                opacity: isResetButtonVisible ? 1.0 : 0.0,
-                duration: const Duration(
-                    milliseconds: actionButtonOpacityDurationMilliseconds),
-                child: IconButton(
-                  icon: const Icon(Icons.replay),
-                  tooltip: 'Reset',
-                  onPressed: resetStopwatch,
-                ),
-              )),
-          const SizedBox(width: actionButtonSizedBoxSize),
-          IconButton.filled(
-            icon: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
-            onPressed: _stopwatch.isRunning ? stopStopwatch : startStopwatch,
-            tooltip: _stopwatch.isRunning
-                ? 'Stop'
-                : _stopwatch.isZero()
-                    ? 'Start'
-                    : 'Resume',
-            iconSize: 40,
-          ),
-          const SizedBox(width: actionButtonSizedBoxSize),
-          Visibility(
-              visible: _stopwatch.isRunning,
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              child: AnimatedOpacity(
-                opacity: _stopwatch.isRunning ? 1.0 : 0.0,
-                duration: const Duration(
-                    milliseconds: actionButtonOpacityDurationMilliseconds),
-                child: IconButton(
-                  icon: const Icon(Icons.flag),
-                  tooltip: 'Lap',
-                  onPressed: lap,
-                ),
-              )),
-        ],
+      appBar: AppBar(),
+      body: ListView(children: <Widget>[
+        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          PulsingTextWidget(
+              text: _stopwatch.formatElapsed(),
+              isPulsing: !_stopwatch.isRunning && !_stopwatch.isZero()),
+          const SizedBox(height: 30),
+          if (_stopwatch.laps.isNotEmpty)
+            SizedBox(
+                height: 300,
+                child: SingleChildScrollView(
+                  child: LapTableWidget(laps: _stopwatch.laps),
+                )),
+        ]),
+      ]),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: _stopwatch.isRunning ? stopStopwatch : startStopwatch,
+        tooltip: _stopwatch.isRunning
+            ? 'Stop'
+            : _stopwatch.isZero()
+                ? 'Start'
+                : 'Resume',
+        child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow,
+            size: startStopActionButtonIconSize),
       ),
-      const SizedBox(height: actionButtonSizedBoxSize),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Visibility(
-              visible: isRemoveAllLapsButtonVisible,
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              child: AnimatedOpacity(
-                opacity: isRemoveAllLapsButtonVisible ? 1.0 : 0.0,
-                duration: const Duration(
-                    milliseconds: actionButtonOpacityDurationMilliseconds),
-                child: ElevatedButton(
-                  onPressed: removeAllLaps,
-                  child: const Text('Remove All Laps'),
-                ),
-              ))
-        ],
-      ),
-      const SizedBox(height: actionButtonSizedBoxSize),
-      SizedBox(
-        height: 300,
-        child: Visibility(
-          visible: _stopwatch.laps.isNotEmpty,
-          child: SingleChildScrollView(
-            child: LapTableWidget(laps: _stopwatch.laps),
-          ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          children: <Widget>[
+            const Spacer(),
+            if (_stopwatch.laps.isNotEmpty || !_stopwatch.isZero())
+              IconButton(
+                iconSize: actionButtonIconSize,
+                icon: const Icon(Icons.replay),
+                tooltip: 'Reset',
+                onPressed: resetStopwatch,
+              ),
+            const Spacer(),
+            const SizedBox(width: 10),
+            const Spacer(),
+            if (_stopwatch.isRunning)
+              IconButton(
+                iconSize: actionButtonIconSize,
+                icon: const Icon(Icons.flag),
+                tooltip: 'Lap',
+                onPressed: lap,
+              ),
+            if (_stopwatch.laps.isNotEmpty && !_stopwatch.isRunning)
+              IconButton(
+                iconSize: actionButtonIconSize,
+                icon: const Icon(Icons.delete_forever),
+                tooltip: 'Delete All Laps',
+                onPressed: removeAllLaps,
+              ),
+            // Using a dummy icon button for avoiding the other buttons jumping effect
+            if (!_stopwatch.isRunning && !_stopwatch.laps.isNotEmpty)
+              Visibility(
+                  maintainState: true,
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  visible: false,
+                  child: IconButton(
+                    iconSize: actionButtonIconSize,
+                    icon: const Icon(Icons.abc),
+                    onPressed: () {},
+                  )),
+            const Spacer(),
+          ],
         ),
       ),
-    ]));
+    );
   }
 }
