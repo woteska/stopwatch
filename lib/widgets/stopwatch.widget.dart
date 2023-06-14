@@ -68,21 +68,28 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView(children: <Widget>[
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          PulsingTextWidget(
-              text: _stopwatch.formatElapsed(),
-              isPulsing: !_stopwatch.isRunning && !_stopwatch.isZero()),
-          const SizedBox(height: 30),
-          if (_stopwatch.laps.isNotEmpty)
-            SizedBox(
-                height: 300,
-                child: SingleChildScrollView(
-                  child: LapTableWidget(laps: _stopwatch.laps),
-                )),
+      body: SizedBox(
+        height: double.infinity,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Expanded(
+            flex: 4,
+            child: Center(
+                child: PulsingTextWidget(
+                    text: _stopwatch.formatElapsed(),
+                    isPulsing: !_stopwatch.isRunning && !_stopwatch.isZero())),
+          ),
+          Expanded(
+            flex: 6,
+            child: _stopwatch.laps.isNotEmpty
+                ? Container(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: SingleChildScrollView(
+                      child: LapTableWidget(laps: _stopwatch.laps),
+                    ))
+                : const SizedBox(),
+          )
         ]),
-      ]),
+      ),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         onPressed: _stopwatch.isRunning ? stopStopwatch : startStopwatch,
