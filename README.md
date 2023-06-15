@@ -17,6 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Improvement Opportunities
 
+- Improve the ClockWidget by making it prettier and possible for customization
 - Mark the best and worse lap with icons in the table rows, so the user can know what are the worst and the best lap
 - Add sort header functionality to laps table, so the user can sort each table column in ascending or descending order
 - Add sticky table header functionality when the official DataTable supports this common Material Design feature
