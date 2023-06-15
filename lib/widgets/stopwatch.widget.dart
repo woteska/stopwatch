@@ -16,6 +16,7 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
     with TickerProviderStateMixin, StopwatchTimeFormatMixin {
   final AdvancedStopwatch _stopwatch = AdvancedStopwatch();
   late Ticker _ticker;
+  final ScrollController _scrollController = ScrollController();
   static const startStopActionButtonIconSize = 40.0;
   static const actionButtonIconSize = 30.0;
 
@@ -84,8 +85,10 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
                 ? Container(
                     padding: const EdgeInsets.only(bottom: 50),
                     child: Scrollbar(
+                        controller: _scrollController,
                         thumbVisibility: true,
                         child: SingleChildScrollView(
+                          controller: _scrollController,
                           child: LapTableWidget(laps: _stopwatch.laps),
                         )))
                 : const SizedBox(),
