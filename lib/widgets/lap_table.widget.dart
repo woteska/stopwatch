@@ -32,18 +32,23 @@ class LapTableWidget extends StatelessWidget {
       ],
       rows: List.generate(
         laps.length,
-        (index) => DataRow(cells: [
-          // TODO: remove style settings when dataTextStyle and headingTextStyle issue is resolved
-          DataCell(
-            Text((index + 1).toString(), style: dataTextStyle),
-          ),
-          DataCell(
-            Text(laps[index].formatLapDifference(), style: dataTextStyle),
-          ),
-          DataCell(
-            Text(laps[index].formatElapsed(), style: dataTextStyle),
-          ),
-        ]),
+        (index) {
+          final reversedIndex = laps.length - 1 - index;
+          final lap = laps[reversedIndex];
+
+          return DataRow(cells: [
+            // TODO: remove style settings when dataTextStyle and headingTextStyle issue is resolved
+            DataCell(
+              Text((reversedIndex + 1).toString(), style: dataTextStyle),
+            ),
+            DataCell(
+              Text(lap.formatLapDifference(), style: dataTextStyle),
+            ),
+            DataCell(
+              Text(lap.formatElapsed(), style: dataTextStyle),
+            ),
+          ]);
+        },
       ),
     );
   }
