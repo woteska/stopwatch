@@ -23,17 +23,15 @@ class AdvancedStopwatch extends Stopwatch with StopwatchTimeFormatMixin {
       return;
     }
 
-    final currentElapsedMicroseconds = elapsed;
-    var previousLapDifferenceMicroseconds = const Duration();
+    final currentElapsed = elapsed;
+    var lapDifference = elapsed;
 
     if (laps.isNotEmpty) {
       final previousLap = laps.last;
-      previousLapDifferenceMicroseconds =
-          currentElapsedMicroseconds - previousLap.elapsed;
+      lapDifference = currentElapsed - previousLap.elapsed;
     }
 
-    final newLap = StopwatchLap(
-        currentElapsedMicroseconds, previousLapDifferenceMicroseconds);
+    final newLap = StopwatchLap(currentElapsed, lapDifference);
 
     laps.add(newLap);
   }

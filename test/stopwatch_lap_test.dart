@@ -7,6 +7,6 @@ void main() {
         const Duration(seconds: 0, milliseconds: 123));
 
     expect(lap.formatElapsed(), '10:02.000');
-    expect(lap.formatPreviousLapDifference(), '00:00.123');
+    expect(lap.formatLapDifference(), '00:00.123');
   });
 }

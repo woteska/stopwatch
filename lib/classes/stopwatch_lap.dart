@@ -2,11 +2,11 @@ import 'package:stopwatch/mixins/stopwatch_time_format.mixin.dart';
 
 class StopwatchLap with StopwatchTimeFormatMixin {
   Duration elapsed;
-  Duration previousLapDifference;
+  Duration lapDifference;
 
-  StopwatchLap(this.elapsed, this.previousLapDifference);
+  StopwatchLap(this.elapsed, this.lapDifference);
 
   String formatElapsed() => formatDuration(elapsed);
 
-  String formatPreviousLapDifference() => formatDuration(previousLapDifference);
+  String formatLapDifference() => formatDuration(lapDifference);
 }

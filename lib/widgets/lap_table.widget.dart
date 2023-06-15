@@ -38,8 +38,7 @@ class LapTableWidget extends StatelessWidget {
             Text((index + 1).toString(), style: dataTextStyle),
           ),
           DataCell(
-            Text(laps[index].formatPreviousLapDifference(),
-                style: dataTextStyle),
+            Text(laps[index].formatLapDifference(), style: dataTextStyle),
           ),
           DataCell(
             Text(laps[index].formatElapsed(), style: dataTextStyle),
