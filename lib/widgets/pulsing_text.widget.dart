@@ -5,10 +5,12 @@ class PulsingTextWidget extends StatefulWidget {
     super.key,
     required this.text,
     required this.isPulsing,
+    this.textFontSize = 20.0,
     this.pulseMilliseconds = 1000,
   });
 
   final String text;
+  final double textFontSize;
   final bool isPulsing;
   final int pulseMilliseconds;
 
@@ -60,8 +62,8 @@ class _PulsingTextWidgetState extends State<PulsingTextWidget>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final style =
-        theme.textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w800);
+    final style = theme.textTheme.displayMedium!
+        .copyWith(fontWeight: FontWeight.w500, fontSize: widget.textFontSize);
 
     if (!widget.isPulsing) {
       return Text(widget.text, style: style);
