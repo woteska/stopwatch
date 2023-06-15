@@ -83,9 +83,11 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
             child: _stopwatch.laps.isNotEmpty
                 ? Container(
                     padding: const EdgeInsets.only(bottom: 50),
-                    child: SingleChildScrollView(
-                      child: LapTableWidget(laps: _stopwatch.laps),
-                    ))
+                    child: Scrollbar(
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          child: LapTableWidget(laps: _stopwatch.laps),
+                        )))
                 : const SizedBox(),
           )
         ]),
