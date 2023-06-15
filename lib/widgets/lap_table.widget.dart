@@ -28,7 +28,7 @@ class LapTableWidget extends StatelessWidget {
         // TODO: remove style settings when dataTextStyle and headingTextStyle issue is resolved
         DataColumn(label: Text('#', style: headingTextStyle)),
         DataColumn(label: Text('Lap', style: headingTextStyle)),
-        DataColumn(label: Text('Difference', style: headingTextStyle)),
+        DataColumn(label: Text('Time', style: headingTextStyle)),
       ],
       rows: List.generate(
         laps.length,
@@ -38,11 +38,11 @@ class LapTableWidget extends StatelessWidget {
             Text((index + 1).toString(), style: dataTextStyle),
           ),
           DataCell(
-            Text(laps[index].formatElapsed(), style: dataTextStyle),
-          ),
-          DataCell(
             Text(laps[index].formatPreviousLapDifference(),
                 style: dataTextStyle),
+          ),
+          DataCell(
+            Text(laps[index].formatElapsed(), style: dataTextStyle),
           ),
         ]),
       ),
