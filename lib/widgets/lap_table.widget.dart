@@ -35,7 +35,7 @@ class LapTableWidget extends StatelessWidget {
         (index) => DataRow(cells: [
           // TODO: remove style settings when dataTextStyle and headingTextStyle issue is resolved
           DataCell(
-            Text(index.toString(), style: dataTextStyle),
+            Text((index + 1).toString(), style: dataTextStyle),
           ),
           DataCell(
             Text(laps[index].formatElapsed(), style: dataTextStyle),
