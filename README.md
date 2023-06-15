@@ -1,6 +1,6 @@
 # stopwatch
 
-![](https://github.com/woteska/stopwatch/demo.gif)
+![Demo](demo.gif)
 
 ## Getting Started
 
