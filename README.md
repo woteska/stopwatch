@@ -1,6 +1,6 @@
 # stopwatch
 
-A new Flutter project.
+![](https://github.com/woteska/stopwatch/demo.gif)
 
 ## Getting Started
 
