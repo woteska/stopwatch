@@ -19,10 +19,6 @@ class AdvancedStopwatch extends Stopwatch with StopwatchTimeFormatMixin {
     laps.clear();
   }
 
-  void removeAllLaps() {
-    laps.clear();
-  }
-
   void lap() {
     if (!isRunning) {
       return;

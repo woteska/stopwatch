@@ -59,7 +59,7 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
 
   void removeAllLaps() {
     setState(() {
-      _stopwatch.removeAllLaps();
+      _stopwatch.laps.clear();
     });
   }
 
