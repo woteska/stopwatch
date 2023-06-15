@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stopwatch/classes/advanced_stopwatch.dart';
 import 'package:stopwatch/mixins/stopwatch_time_format.mixin.dart';
+import 'package:stopwatch/widgets/clock.widget.dart';
 import 'package:stopwatch/widgets/lap_table.widget.dart';
 import 'package:stopwatch/widgets/pulsing_text.widget.dart';
 
@@ -68,19 +69,32 @@ class _StopwatchWidgetState extends State<StopwatchWidget>
 
   @override
   Widget build(BuildContext context) {
+    final isScreenHeightSmall = MediaQuery.of(context).size.height < 540;
+
     return Scaffold(
       body: SizedBox(
         height: double.infinity,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Center(
-                child: PulsingTextWidget(
-                    text: _stopwatch.formatElapsed(),
-                    isPulsing: !_stopwatch.isRunning && !_stopwatch.isZero())),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClockWidget(
+                    isSizeSmall: isScreenHeightSmall,
+                    dateTime: _stopwatch.dateTime(),
+                  ),
+                  PulsingTextWidget(
+                      textFontSize: isScreenHeightSmall ? 25 : 40,
+                      text: _stopwatch.formatElapsed(),
+                      isPulsing: !_stopwatch.isRunning && !_stopwatch.isZero())
+                ],
+              ),
+            ),
           ),
           Expanded(
-            flex: 6,
+            flex: 5,
             child: _stopwatch.laps.isNotEmpty
                 ? Container(
                     padding: const EdgeInsets.only(bottom: 50),

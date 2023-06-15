@@ -8,6 +8,11 @@ class AdvancedStopwatch extends Stopwatch with StopwatchTimeFormatMixin {
 
   String formatElapsed() => formatDuration(elapsed);
 
+  DateTime dateTime() {
+    return DateTime.fromMicrosecondsSinceEpoch(elapsedMicroseconds)
+        .subtract(const Duration(hours: 1));
+  }
+
   @override
   void reset() {
     super.reset();
